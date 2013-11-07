@@ -28,7 +28,6 @@ access::access {
 }
 }
 
-notify { "interactive is $interactive": }
 if $interactive == true {
         adduser { ["ALL"] : priority => 30}
      }
