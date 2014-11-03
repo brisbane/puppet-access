@@ -1,6 +1,6 @@
 class access::params (  
        $admins  = ['root'],
        $interactive = false,
-       $secretsfilepath = "site_files/pp_local/authconfig"
+       $otherusers = hiera_array("access::params::otherusers",[])
 ){
 }

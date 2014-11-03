@@ -1,6 +1,7 @@
 class access::access_wrapper (
 #$admins = $access::params::admins, 
 #$interactive=$access::params::interactive 
+$otherusers = $acess::params::otherusers
 	) inherits access::params
 {
 
@@ -34,28 +35,6 @@ if $interactive == true {
      else  { 
 	blockuser { ["ALL"] : priority => 30}
      }
-
- if ! ($osfamily in ['RedHat']) {
-    fail("access::access_wrapper does not support osfamily $osfamily")
-  }
-  else
-  {
-  #Not that secret, but can give a few things away
-   file { '/etc/pam.d/system-auth':
-         ensure =>present,
-         source  => "puppet:///$secretsfilepath/pam.d.system-auth",
-         owner   => 'root',
-         group   => 'root',
-         mode    => '0444',
-  }
-   file { '/etc/pam.d/password-auth':
-         ensure =>present,
-         source  => "puppet:///$secretsfilepath/pam.d.system-auth",
-         owner   => 'root',
-         group   => 'root',
-         mode    => '0444',
-  }
- } 
-
-
+ $users = any2array( $otherusers ) 
+# adduser { $users : priority => 25 }
 }
